@@ -5,15 +5,21 @@ exports.up = function (knex, Promise) {
 
         tbl.increments();
 
-        tbl.string('name', 125)
+        tbl
+            .string('name', 128)
             .notNullable()
             .unique();
-        tbl
-            .timestamps(true, true)
 
         tbl
             .integer('cohort_id')
+            .notNullable()
             .references('id')
+            .inTable('cohorts') // ref the cohorts table
+            .onDelete('CASCADE')
+            .onUpdate('CASCADE');
+
+        tbl.timestamps(true, true);
+
 
     });
 };
@@ -23,3 +29,6 @@ exports.down = function (knex, Promise) {
 
 };
 
+
+
+// find out why the order is important and why it can break the code.

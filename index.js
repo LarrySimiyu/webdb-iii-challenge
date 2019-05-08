@@ -3,14 +3,19 @@
 
 const express = require('express');
 const helmet = require('helmet');
+const knex = require('knex');
+
+// -- create DataBase with knex
+//  -- connect knexFile
+// -- figure out gitFolder
 
 const knexConfig = {
     client: 'sqlite3',
+    useNullAsDefault: true,
     connection: {
-        filename: './data/rolex.db3',
-    },
-    useNullAsDefault: true, // needed for sqlite
-};
+        filename: './data/lambda.db3'
+    }
+}
 
 const db = knex(knexConfig);
 const server = express();
@@ -54,7 +59,7 @@ server.get('/api/cohorts/:id', (req, res) => {
         });
 });
 
-// [GET] /api/cohorts/:id/students returns all students for the cohort with the specified id.
+// [GET] /api/cohorts/:id/students returns all students for the cohort with the specified id. --- .join()
 
 // [PUT] /api/cohorts/:id ---This route will update the cohort with the matching id using information sent in the body of the request.
 server.put('/api/cohorts/:id', (req, res) => {
@@ -91,9 +96,6 @@ server.delete('/api/cohorts/:id', (req, res) => {
 })
 
 
-
-
-
-server.listen(9000, () => { // this server is working on port 8080
-    console.log('Server is listening on port: 8080')
+server.listen(9000, () => { 
+    console.log('Server is listening on port: 9000')
 });
